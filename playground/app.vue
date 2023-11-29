@@ -4,8 +4,9 @@
       <label for="uname"><b>Hôm nay bạn cảm thấy thế nào ?</b></label>
 
       <div>
-        <button class="button button4"
-        @click="chooseFeeling('material-symbols:thumb-up-outline-rounded')"
+        <button
+          class="button button4"
+          @click="chooseFeeling('material-symbols:thumb-up-outline-rounded')"
         >
           <Icon
             name="material-symbols:thumb-up-outline-rounded"
@@ -91,7 +92,8 @@ function submit() {
   const date = new Date();
   console.log("writeĐiary", {
     icon: iconChoosed.value,
-    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0].status,
+    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0]
+      .status,
     content: content.value,
     date:
       date.getDate() +
@@ -100,11 +102,18 @@ function submit() {
       "/" +
       date.getFullYear(),
   });
-  // emit("writeĐiary", {
-  //   icon: icon.value,
-  //   content: content.value,
-  //   date: new Date().format("dd/mm/yyyy"),
-  // });
+  emit("writeĐiary", {
+    icon: iconChoosed.value,
+    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0]
+      .status,
+    content: content.value,
+    date:
+      date.getDate() +
+      "/" +
+      (Number(date.getMonth()) + 1) +
+      "/" +
+      date.getFullYear(),
+  });
 }
 </script>
 

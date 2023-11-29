@@ -1,10 +1,13 @@
 {
-  "name": "create-diary-module",
-  "version": "1.0.0",
+  "name": "@longtranaf/create-diary-module",
+  "version": "1.0.3",
   "description": "My new Nuxt module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-org/my-module.git"
+    "url": "git+https://github.com/longtranaf/create-diary-module.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "license": "MIT",
   "type": "module",
@@ -50,6 +53,7 @@
     "eslint": "^8.54.0",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.6",
+    "ts-node": "^10.9.1",
     "vitest": "^0.33.0"
   },
   "bugs": {

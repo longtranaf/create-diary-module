@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, addImports, addComponent, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, addComponent, addImports,createResolver } from '@nuxt/kit'
 import { resolve } from 'path'
 import { fileURLToPath } from 'url'
 // Module options TypeScript interface definition
@@ -13,10 +13,17 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {},
   setup (options, nuxt) {
     const resolver = createResolver(import.meta.url)
-    if(options.addPlugin) {
       const runtimeDir  = fileURLToPath(new URL('./runtime', import.meta.url))
       nuxt.options.build.transpile.push(runtimeDir)
       addPlugin(resolve(runtimeDir, 'plugin'))
-    }
+    addComponent({
+      name: 'diaryCreateComponent', // name of the component to be used in vue templates
+      filePath: resolver.resolve('runtime/components/DiaryCreate.vue')
+    })
+    addImports({
+      name: 'useCreateDiary', // name of the composable to be used
+      as: 'useCreateDiary',
+      from: resolver.resolve('runtime/composables/useCreateDiary') // path of composable
+    })
   }
 })
