@@ -4,8 +4,9 @@
       <label for="uname"><b>Hôm nay bạn cảm thấy thế nào ?</b></label>
 
       <div>
-        <button class="button button4"
-        @click="chooseFeeling('material-symbols:thumb-up-outline-rounded')"
+        <button
+          class="button button4"
+          @click="chooseFeeling('material-symbols:thumb-up-outline-rounded')"
         >
           <Icon
             name="material-symbols:thumb-up-outline-rounded"
@@ -49,12 +50,13 @@
         {{ iconBtn.filter((item) => item.name === iconChoosed)[0].status }}
         <Icon :name="iconChoosed" color="black" />
       </p>
-      <button @click="submit">Lưu</button>
+      <button @click="save">Lưu</button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useState } from "nuxt/app";
 const iconBtn = useState("iconBtn", () => [
   {
     name: "material-symbols:thumb-up-outline-rounded",
@@ -79,19 +81,20 @@ const iconBtn = useState("iconBtn", () => [
 ]);
 const iconChoosed = useState("iconChoosed", () => "");
 const content = useState("content", () => "");
-const emit = defineEmits(["writeĐiary"]);
+const emit = defineEmits(["write"]);
 function chooseFeeling(icon) {
   console.log("ico1n", typeof icon);
   console.log("iconChoosed", iconChoosed);
   iconChoosed.value = String(icon);
   console.log("icon", icon);
 }
-function submit() {
+function save() {
   console.log("iconChoosed", iconChoosed);
   const date = new Date();
-  console.log("writeĐiary", {
+  console.log("write", {
     icon: iconChoosed.value,
-    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0].status,
+    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0]
+      .status,
     content: content.value,
     date:
       date.getDate() +
@@ -100,11 +103,18 @@ function submit() {
       "/" +
       date.getFullYear(),
   });
-  // emit("writeĐiary", {
-  //   icon: icon.value,
-  //   content: content.value,
-  //   date: new Date().format("dd/mm/yyyy"),
-  // });
+  emit("write", {
+    icon: iconChoosed.value,
+    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0]
+      .status,
+    content: content.value,
+    date:
+      date.getDate() +
+      "/" +
+      (Number(date.getMonth()) + 1) +
+      "/" +
+      date.getFullYear(),
+  });
 }
 </script>
 

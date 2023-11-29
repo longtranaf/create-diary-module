@@ -30,8 +30,10 @@ export const useDiaryStore = defineStore('diary', {
   },
   actions: {
     createDiary(data: { icon: string, status: string, content: string, date: string }) {
-      console.log(`data`, data);
-      this.userList[0].diary.push(data);
+      console.log("data", data);
+      this.userList[0].diary = [...this.userList[0].diary, data]
+      console.log("this.userList", this.userList);
+
     }
   }
 }

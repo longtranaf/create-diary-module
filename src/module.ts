@@ -17,7 +17,7 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.build.transpile.push(runtimeDir)
       addPlugin(resolve(runtimeDir, 'plugin'))
     addComponent({
-      name: 'diaryCreateComponent', // name of the component to be used in vue templates
+      name: 'DiaryCreate', // name of the component to be used in vue templates
       filePath: resolver.resolve('runtime/components/DiaryCreate.vue')
     })
     addImports({
