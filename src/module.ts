@@ -1,6 +1,7 @@
 import { defineNuxtModule, addPlugin, addComponent, addImports,createResolver } from '@nuxt/kit'
 import { resolve } from 'path'
 import { fileURLToPath } from 'url'
+
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
 
@@ -21,9 +22,9 @@ export default defineNuxtModule<ModuleOptions>({
       filePath: resolver.resolve('runtime/components/DiaryCreate.vue')
     })
     addImports({
-      name: 'useCreateDiary', // name of the composable to be used
-      as: 'useCreateDiary',
-      from: resolver.resolve('runtime/composables/useCreateDiary') // path of composable
+      name: 'onLoginSuccess', // name of the composable to be used
+      as: 'onLoginSuccess',
+      from: resolver.resolve('runtime/listener/onLoginSuccess') // path of composable
     })
   }
 })

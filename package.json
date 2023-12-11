@@ -1,6 +1,6 @@
 {
   "name": "@longtranaf/create-diary-module",
-  "version": "1.1.8",
+  "version": "1.7.4",
   "description": "My new Nuxt module",
   "repository": {
     "type": "git",
@@ -48,6 +48,7 @@
     "@nuxt/module-builder": "^0.5.4",
     "@nuxt/schema": "^3.8.2",
     "@nuxt/test-utils": "^3.8.1",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
     "@types/node": "^20.9.3",
     "changelogen": "^0.5.5",
     "eslint": "^8.54.0",

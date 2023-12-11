@@ -1,61 +1,58 @@
 <template>
-  <div>
-    <div class="container">
-      <label for="uname"><b>Hôm nay bạn cảm thấy thế nào ?</b></label>
+  <div class="container">
+    <label for="uname"><b>Hôm nay bạn cảm thấy thế nào ?</b></label>
 
-      <div>
-        <button class="button button4"
+    <div>
+      <button
+        class="button button4"
         @click="chooseFeeling('material-symbols:thumb-up-outline-rounded')"
-        >
-          <Icon
-            name="material-symbols:thumb-up-outline-rounded"
-            color="white"
-          />
-        </button>
-        <button
-          class="button button4"
-          @click="chooseFeeling('material-symbols:favorite')"
-        >
-          <Icon name="material-symbols:favorite" color="white" />
-        </button>
-        <button
-          class="button button4"
-          @click="chooseFeeling('fa6-regular:face-laugh-squint')"
-        >
-          <Icon name="fa6-regular:face-laugh-squint" color="white" />
-        </button>
-        <button
-          class="button button4"
-          @click="chooseFeeling('tabler:mood-suprised')"
-        >
-          <Icon name="tabler:mood-suprised" color="white" />
-        </button>
-        <button
-          class="button button4"
-          @click="chooseFeeling('fa6-regular:face-sad-tear')"
-        >
-          <Icon name="fa6-regular:face-sad-tear" color="white" />
-        </button>
-      </div>
-
-      <textarea
-        label="Nhập nội dung nhật ký"
-        rows="4"
-        cols="50"
-        v-model="content"
-      ></textarea>
-      <p v-if="iconChoosed">
-        - đang cảm thấy
-        {{ iconBtn.filter((item) => item.name === iconChoosed)[0].status }}
-        <Icon :name="iconChoosed" color="black" />
-      </p>
-      <button @click="submit">Lưu</button>
+      >
+        <Icon name="material-symbols:thumb-up-outline-rounded" color="white" />
+      </button>
+      <button
+        class="button button4"
+        @click="chooseFeeling('material-symbols:favorite')"
+      >
+        <Icon name="material-symbols:favorite" color="white" />
+      </button>
+      <button
+        class="button button4"
+        @click="chooseFeeling('fa6-regular:face-laugh-squint')"
+      >
+        <Icon name="fa6-regular:face-laugh-squint" color="white" />
+      </button>
+      <button
+        class="button button4"
+        @click="chooseFeeling('tabler:mood-suprised')"
+      >
+        <Icon name="tabler:mood-suprised" color="white" />
+      </button>
+      <button
+        class="button button4"
+        @click="chooseFeeling('fa6-regular:face-sad-tear')"
+      >
+        <Icon name="fa6-regular:face-sad-tear" color="white" />
+      </button>
     </div>
+
+    <textarea
+      label="Nhập nội dung nhật ký"
+      rows="4"
+      cols="50"
+      v-model="content"
+    ></textarea>
+    <p v-if="iconChoosed">
+      - đang cảm thấy
+      {{ iconBtn.filter((item) => item.name === iconChoosed)[0].status }}
+      <Icon :name="iconChoosed" color="black" />
+    </p>
+    <button @click="submit">Lưu</button>
   </div>
 </template>
 
 <script setup>
 import { useState } from "nuxt/app";
+import { useDiaryStore } from "../src/runtime/store";
 const iconBtn = useState("iconBtn", () => [
   {
     name: "material-symbols:thumb-up-outline-rounded",
@@ -90,18 +87,7 @@ function chooseFeeling(icon) {
 function submit() {
   console.log("iconChoosed", iconChoosed);
   const date = new Date();
-  console.log("writeĐiary", {
-    icon: iconChoosed.value,
-    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0].status,
-    content: content.value,
-    date:
-      date.getDate() +
-      "/" +
-      (Number(date.getMonth()) + 1) +
-      "/" +
-      date.getFullYear(),
-  });
-  emit("write", {
+  const data = {
     icon: iconChoosed.value,
     status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0]
       .status,
@@ -111,8 +97,32 @@ function submit() {
       "/" +
       (Number(date.getMonth()) + 1) +
       "/" +
-      date.getFullYear(),
+      date.getFullYear() +
+      " " +
+      date.getHours() +
+      ":" +
+      date.getMinutes(),
+  }
+  console.log("write", {
+    icon: iconChoosed.value,
+    status: iconBtn.value.filter((item) => item.name === iconChoosed.value)[0]
+      .status,
+    content: content.value,
+    date:
+      date.getDate() +
+      "/" +
+      (Number(date.getMonth()) + 1) +
+      "/" +
+      date.getFullYear() +
+      " " +
+      date.getHours() +
+      ":" +
+      date.getMinutes(),
   });
+console.log("diaryStore", diaryStore);
+  const createDiary = diaryStore.createNewDiary(data);
+  emit("write", data);
+  console.log("createDiary", createDiary);
 }
 </script>
 
